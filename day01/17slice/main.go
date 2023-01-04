@@ -10,7 +10,9 @@ func main() {
 	// demo5()
 	// demo6()
 	// demo7()
-	demo8()
+	// demo8()
+	// demo9()
+	demo10()
 }
 
 /*声明切片类型的基本语法如下：
@@ -147,4 +149,21 @@ func demo8() {
 	//从上面的结果可以看出：
 	// append()函数将元素追加到切片的最后并返回该切片。
 	// 切片numSlice的容量按照1，2，4，8，16这样的规则自动进行扩容，每次扩容后都是扩容前的2倍。
+}
+
+//使用copy()函数复制切片
+func demo9() {
+	a := []int{1, 2, 3, 4, 5}
+	var b = make([]int, 5, 5)
+	copy(b, a) //使用copy()函数将切片a中的元素复制到切片c
+	b[0] = 100
+	fmt.Println(a)
+	fmt.Println(b)
+}
+
+//从切片中删除元素
+func demo10() {
+	a := []int{1, 2, 3, 4, 5, 6, 7, 8}
+	s := append(a[:2], a[3:]...)
+	fmt.Println(s)
 }
