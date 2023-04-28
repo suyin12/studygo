@@ -1,0 +1,12 @@
+<h1 style="color:red">Hello Golang!</h1>
+<h5>Hi</h5>
+<img id='i1' src='https://static.runoob.com/images/demo/demo1.jpg'></img>
+<button id='b1'>click</button>
+
+<script>
+
+document.getElementById('b1').onclick=function(){
+    document.getElementById('i1').src='https://tu.sioe.cn/gj/qiege/image.jpg'
+}
+
+</script>
