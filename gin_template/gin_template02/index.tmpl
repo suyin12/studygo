@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hello</title>
+</head>
+
+<body>
+
+    <p>姓名 {{.m1.name}}</p>
+    <p>年龄 {{.m1.age}}</p>
+    <p>性别 {{.m1.gender}}</p>
+    {{/*写注释*/}}
+    <p>姓名 {{.user.Name}}</p>
+    <p>年龄 {{.user.Age}}</p>
+    <p>性别 {{.user.Gender}}</p>
+
+    <hr>
+    {{/*变量*/}}
+    {{$age := .user.Age}}
+    {{$v1 := 100}}
+    <p>年龄:{{$age}}</p>
+
+    {{/*移除变量空格*/}}
+    <hr>
+    <p>姓名 {{- .user.Name -}}</p>
+    <p>年龄 {{- .user.Age -}}</p>
+    <p>性别 {{- .user.Gender -}}</p>
+
+    {{/*条件*/}}
+    {{if $v1}}
+    {{$v1}}
+    {{else}}
+    no
+    {{end}}
+
+    <hr>
+    {{/*比较*/}}
+    {{if lt .m1.age 22}}
+    <18 {{else}}>=18
+        {{end}}
+
+
+
+        {{range $index,$hobby := .hobby}}
+        <p>{{$index}}-{{$hobby}}</p>
+        {{else}}
+        空值
+        {{end}}
+
+        <hr>
+        {{with .m1}}
+        <p>姓名 {{.name}}</p>
+        <p>年龄 {{.age}}</p>
+        <p>性别 {{.gender}}</p>
+        {{end}}
+
+        {{index .hobby 2}}
+</body>
+
+</html>
