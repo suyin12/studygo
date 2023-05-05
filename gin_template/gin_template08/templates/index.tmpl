@@ -1,0 +1,7 @@
+{{/*模板继承*/}}
+{{ template "base.tmpl" .}}
+{{/*模板填充*/}}
+{{define "content"}}
+    <h1>index</h1>
+    good {{.}}
+{{end}}
