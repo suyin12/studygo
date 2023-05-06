@@ -9,14 +9,24 @@ import (
 func index(w http.ResponseWriter, r *http.Request) {
 	//定义模板
 	//解析模板
-	t := template.New("index.tmpl").Delims("{[", "]}")
+	//解析模板前自定义函数
+	t := template.New("index.tmpl").Funcs(template.FuncMap{
+		"safe": func(str string) template.HTML {
+			return template.HTML(str)
+		},
+	}).Delims("{[", "]}")
 	t, err := t.ParseFiles("./index.tmpl")
 	//渲染模板
 	if err != nil {
 		fmt.Println("create template failed, err:", err)
 		return
 	}
-	t.Execute(w, "小王子")
+	str1 := "<script>alter(123)</script>"
+	str2 := "<a href='https://www.google.com'>谷歌</a>"
+	t.Execute(w, map[string]string{
+		"str1": str1,
+		"str2": str2,
+	})
 }
 
 func main() {
