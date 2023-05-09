@@ -13,8 +13,8 @@ import (
 // 待办事项结构体
 type Todo struct {
 	gorm.Model
-	Title  string `json:"title"`
-	Status int    `json:"status"`
+	Title  string `json:"title" binding:"required"`
+	Status int    `json:"status" binding:"required"`
 }
 
 func main() {
@@ -37,20 +37,20 @@ func main() {
 
 	//获取全部数据
 	r.GET("/", func(c *gin.Context) {
-		var todo Todo
-		todo_list := db.Find(&todo)
-		fmt.Println(*todo_list)
-		// c.JSON(http.StatusOK, gin.H{
-		// 	"message": "success",
-		// 	"data":    todo_list,
-		// })
+		var todo_list []Todo
+		fmt.Printf("todo type %T\n", todo_list)
+		db.Find(&todo_list)
+		c.JSON(http.StatusOK, gin.H{
+			"message": "success",
+			"data":    todo_list,
+		})
 	})
 
 	//创建待办事项
 	r.POST("/todo", func(c *gin.Context) {
 		var todo Todo
 		if err := c.ShouldBind(&todo); err == nil {
-			fmt.Printf("login info:%#v\n", todo)
+			fmt.Printf("todo data:%#v\n", todo)
 			c.JSON(http.StatusOK, gin.H{
 				"title":  todo.Title,
 				"status": todo.Status,
@@ -81,11 +81,13 @@ func main() {
 
 	//删除待办事项
 	r.DELETE("/todo/:id", func(c *gin.Context) {
-		todo_list := db.Find(&Todo{})
+		var todo Todo
+		id := c.Param("id")
 		c.JSON(http.StatusOK, gin.H{
 			"message": "success",
-			"data":    todo_list,
+			"id":      id,
 		})
+		db.Delete(&todo, id)
 	})
 
 	r.Run(":9090")
